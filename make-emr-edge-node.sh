@@ -40,6 +40,10 @@ showUsage() {
   echo "# 说明：制作sqoop客户端"
   echo "$0 make-sqoop-client"
   echo
+
+  echo "# 说明：制作flink客户端"
+  echo "$0 make-flink-client PEM_FILE_PATH] [MASTER_NODE_IP]"
+  echo
 }
 
 printHeading() {
@@ -154,6 +158,15 @@ makeHBaseClient() {
   chmod 777 -R /var/log/hbase
 }
 
+makeFlinkClient() {
+  pemFile="$1"
+  masterNode="$2"
+  yum -y install flink
+  rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no -o ServerAliveInterval=10 -i $pemFile" hadoop@$masterNode:'/etc/flink/conf/*' /etc/flink/conf
+  mkdir -p /var/log/flink
+  chmod 777 -R /var/log/flink
+}
+
 makeHudiClient() {
   yum -y install hudi
 }
@@ -205,6 +218,9 @@ case $1 in
     ;;
   make-sqoop-client)
     makeSqoopClient
+    ;;
+  make-flink-client)
+    makeFlinkClient
     ;;
   help)
     showUsage
