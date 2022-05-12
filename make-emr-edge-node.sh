@@ -220,6 +220,7 @@ case $1 in
     makeSqoopClient
     ;;
   make-flink-client)
+    shift
     makeFlinkClient "$@"
     ;;
   help)
