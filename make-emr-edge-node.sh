@@ -42,7 +42,7 @@ showUsage() {
   echo
 
   echo "# 说明：制作flink客户端"
-  echo "$0 make-flink-client PEM_FILE_PATH] [MASTER_NODE_IP]"
+  echo "$0 make-flink-client [PEM_FILE_PATH] [MASTER_NODE_IP]"
   echo
 }
 
@@ -220,7 +220,7 @@ case $1 in
     makeSqoopClient
     ;;
   make-flink-client)
-    makeFlinkClient
+    makeFlinkClient "$@"
     ;;
   help)
     showUsage
