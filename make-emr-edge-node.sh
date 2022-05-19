@@ -168,7 +168,10 @@ makeFlinkClient() {
 }
 
 makeHudiClient() {
+  pemFile="$1"
+  masterNode="$2"
   yum -y install hudi
+  rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no -o ServerAliveInterval=10 -i $pemFile" hadoop@$masterNode:'/etc/hudi/conf/*' /etc/hudi/conf
 }
 
 makeSqoopClient() {
@@ -214,7 +217,8 @@ case $1 in
     makeOozieClient "$@"
     ;;
   make-hudi-client)
-    makeHudiClient
+    shift
+    makeHudiClient "$@"
     ;;
   make-sqoop-client)
     makeSqoopClient
