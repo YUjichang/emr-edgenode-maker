@@ -147,6 +147,7 @@ makeSparkClient() {
   echo "spark.hadoop.yarn.timeline-service.enabled false" | tee -a /etc/spark/conf/spark-defaults.conf
   mkdir -p /var/log/spark/user
   chmod 777 -R /var/log/spark/user
+  rm -f /usr/lib/spark/jars/emrfs-hadoop-assembly-*.jar
   cp /usr/share/aws/emr/emrfs/lib/emrfs-hadoop-assembly-*.jar /usr/lib/spark/jars/
 }
 
